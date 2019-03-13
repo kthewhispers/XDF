@@ -155,7 +155,7 @@ def writexdf(filepath, markercharacter, propertydictionary):
 		try:
 			file = open(filepath,'w')
 			for key in propertydictionary:
-				file.write(markercharacter+key+'='+propertydictionary[key]+"\n")
+				file.write(markercharacter+key+'='+str(propertydictionary[key])+"\n")
 			file.close()
 			return True
 		except PermissionError:
