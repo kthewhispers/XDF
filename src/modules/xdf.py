@@ -145,7 +145,7 @@ def getproperty(propertystring):
                 return False
 
 def setproperty(propertystring, propertyvalue):
-        if _hasreadxdf and propertystring in _parseddictionary:
+        if _hasreadxdf:
                 _parseddictionary[propertystring] = propertyvalue
 		return True
         else:
