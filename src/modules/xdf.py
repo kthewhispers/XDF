@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.'''
 
 _parseddictionary = {}
-hasreadxdf = False
+_hasreadxdf = False
 debug = False
 
 def readxdf(data):
-	global hasreadxdf
+	global _hasreadxdf
 	isonproperty = False
 	isonpropertyvalue = False
 	isonequal = False
@@ -43,7 +43,7 @@ def readxdf(data):
 	propvaluewasmarked = False
 	propertyname = ''
 
-	if data[0] != '@' or hasreadxdf:
+	if data[0] != '@' or _hasreadxdf:
 		return False
 	else:
 		for character in data:
@@ -75,11 +75,11 @@ def readxdf(data):
 			position += 1
 
 		_tellcurrentparserdictionary()
-		hasreadxdf = True
+		_hasreadxdf = True
 		return True
 
 def readxdf(data, markercharacter):
-	global hasreadxdf
+	global _hasreadxdf
 	isonproperty = False
 	isonpropertyvalue = False
 	isonequal = False
@@ -96,7 +96,7 @@ def readxdf(data, markercharacter):
 	propvaluewasmarked = False
 	propertyname = ''
 
-	if data[0] != markercharacter or hasreadxdf or len(markercharacter) > 1:
+	if data[0] != markercharacter or _hasreadxdf or len(markercharacter) > 1:
 		return False
 	else:
 		for character in data:
@@ -128,24 +128,24 @@ def readxdf(data, markercharacter):
 			position += 1
 
 		_tellcurrentparserdictionary()
-		hasreadxdf = True
+		_hasreadxdf = True
 		return True
 		
 def reset():
-        hasreadxdf = False
+        _hasreadxdf = False
         _parseddictionary.clear()
         if debug:
         	_tellcurrentparserdictionary()
 	return True
         
 def getproperty(propertystring):
-        if hasreadxdf and propertystring in _parseddictionary:
+        if _hasreadxdf and propertystring in _parseddictionary:
                 return _parseddictionary[propertystring]
         else:
                 return False
 
 def setproperty(propertystring, propertyvalue):
-        if hasreadxdf and propertystring in _parseddictionary:
+        if _hasreadxdf and propertystring in _parseddictionary:
                 _parseddictionary[propertystring] = propertyvalue
 		return True
         else:
