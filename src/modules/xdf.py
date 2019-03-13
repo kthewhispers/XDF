@@ -172,4 +172,4 @@ def writexdf(filepath, propertydictionary):
 			return False
 
 def _tellcurrentparserdictionary():
-	print(F"Listing {len(_parseddictionary.items())} properties and values in memory: \n{_parseddictionary}")
+	print(F"Listing {len(_parseddictionary)} properties and values in memory: \n{_parseddictionary}")
