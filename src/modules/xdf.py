@@ -136,6 +136,7 @@ def reset():
         _parseddictionary.clear()
         if debug:
         	_tellcurrentparserdictionary()
+	return True
         
 def getproperty(propertystring):
         if hasreadxdf and propertystring in _parseddictionary:
@@ -146,6 +147,7 @@ def getproperty(propertystring):
 def setproperty(propertystring, propertyvalue):
         if hasreadxdf and propertystring in _parseddictionary:
                 _parseddictionary[propertystring] = propertyvalue
+		return True
         else:
                 return False
 
@@ -155,6 +157,7 @@ def writexdf(filepath, markercharacter, propertydictionary):
 			for key in propertydictionary:
 				file.write(markercharacter+key+'='+propertydictionary[key]+"\n")
 			file.close()
+			return True
 		except PermissionError:
 			return False
 
@@ -164,6 +167,7 @@ def writexdf(filepath, propertydictionary):
 			for key in propertydictionary:
 				file.write('@'+key+'='+str(propertydictionary[key])+"\n")
 			file.close()
+			return True
 		except PermissionError:
 			return False
 
