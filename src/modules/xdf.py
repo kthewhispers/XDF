@@ -103,6 +103,12 @@ def writexdf(filepath, propertydictionary, markercharacter='@'):
                 return False
         except OSError:
                 return False
-
+        
+def getcurrentdata():
+        if len(_parseddictionary) < 1:
+                return False
+        else:
+                return _parseddictionary
+        
 def _tellcurrentparserdictionary():
         print(F"Listing {len(_parseddictionary)} properties and values in memory: \n{_parseddictionary}")
