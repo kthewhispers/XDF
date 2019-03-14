@@ -22,7 +22,7 @@ _parseddictionary = {}
 _hasreadxdf = False
 debug = False
 
-def readxdf(filepath, data=None, markercharacter='@'):
+def readxdf(filepath, data=None, markercharacter='@', listseparatormarker=','):
         global _hasreadxdf
         isonproperty = False
         isonpropertyvalue = False
@@ -39,6 +39,9 @@ def readxdf(filepath, data=None, markercharacter='@'):
         propwasmarked = False
         propvaluewasmarked = False
         propertyname = ''
+        lastlistsepposition = 0
+        haslist = False
+        propertyvaluelistbuffer = []
 
         if filepath is not None:
                 try:
@@ -60,21 +63,51 @@ def readxdf(filepath, data=None, markercharacter='@'):
                                 if propwasmarked == False:
                                         propertystartindex = position
                                         propwasmarked = True
+                                elif character == listseparatormarker:
+                                        return False
                                 else:
                                         pass
-
+                                        
                         if character == '=':
                                         isonpropertyvalue = True
+                                        isonproperty = False
                                         propertyendindex = position
                                         propertyname = data[propertystartindex:propertyendindex].strip('\n')
                                         propertyvaluestartindex = position + 1
 
                         if isonpropertyvalue:
-                                if character == markercharacter or position == len(data)-1:
+                                if character == markercharacter or position == len(data)-1 and not haslist:
                                         isonmarker = True
                                         propertyvalueendindex = position
                                         _parseddictionary[propertyname] = data[propertyvaluestartindex:propertyvalueendindex].strip('\n')
                                         propwasmarked = False
+
+                                if position == len(data)-1 and not haslist:
+                                        _parseddictionary[propertyname] = data[propertyvaluestartindex:propertyvalueendindex+1].strip('\n')
+
+                                elif character == listseparatormarker and not haslist:
+                                        haslist = True
+                                        propertyvaluelistbuffer.append(data[propertyendindex+1:position].strip(F"{listseparatormarker}\n"))
+                                        lastlistsepposition = position
+
+                                elif character == listseparatormarker and haslist:
+                                        propertyvaluelistbuffer.append(data[lastlistsepposition+1:position].strip(F"{listseparatormarker}\n"))
+                                        lastlistsepposition = position
+
+                                if haslist and position == len(data)-1:
+                                        propertyvaluelistbuffer.append(data[lastlistsepposition+1:position+1].strip(F"{listseparatormarker}\n"))
+                                        _parseddictionary[propertyname] = propertyvaluelistbuffer
+                                        propertyvaluelistbuffer = []
+                                        lastlistsepposition = 0
+                                        haslist = False
+
+                                if character == markercharacter and haslist:
+                                        propertyvaluelistbuffer.append(data[lastlistsepposition+1:position].strip(F"{listseparatormarker}\n"))
+                                        _parseddictionary[propertyname] = propertyvaluelistbuffer
+                                        propertyvaluelistbuffer = []
+                                        lastlistsepposition = 0
+                                        haslist = False
+
                                 else:
                                         pass
 
@@ -83,6 +116,7 @@ def readxdf(filepath, data=None, markercharacter='@'):
                                 isonmarker = False
                         position += 1
                 _hasreadxdf = True
+                _tellcurrentparserdictionary()
                 return True
                 
 def reset():
@@ -103,11 +137,29 @@ def setproperty(propertystring, propertyvalue):
         _parseddictionary[propertystring] = propertyvalue
         return True
 
-def writexdf(filepath, propertydictionary, markercharacter='@'):
+def appendtoproperty(propertystring, propertyvalue):
+        if propertystring in _parseddictionary:
+                _parseddictionary[propertystring] += F",{propertyvalue}"
+                return True
+        else:
+                return False
+
+def writexdf(filepath, propertydictionary, markercharacter='@', listseparatormarker=','):
+        listelementcounter = 0
         try:
                 file = open(filepath,'w')                        
                 for key in propertydictionary:
-                        file.write(markercharacter+key+'='+str(propertydictionary[key])+"\n")
+                        if isinstance(propertydictionary[key], list):
+                                file.write(markercharacter+key+'=')
+                                for element in propertydictionary[key]:
+                                        if listelementcounter != len(propertydictionary[key]) - 1:
+                                                file.write(element+listseparatormarker)
+                                        else:
+                                                file.write(element+'\n')
+                                        listelementcounter += 1
+                                listelementcounter = 0
+                        else:
+                                file.write(markercharacter+key+'='+str(propertydictionary[key])+'\n')
                 file.close()
                 return True
         except PermissionError:
