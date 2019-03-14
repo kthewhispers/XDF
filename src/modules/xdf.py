@@ -145,11 +145,8 @@ def getproperty(propertystring):
                 return False
 
 def setproperty(propertystring, propertyvalue):
-        if _hasreadxdf:
-                _parseddictionary[propertystring] = propertyvalue
-                return True
-        else:
-                return False
+	_parseddictionary[propertystring] = propertyvalue
+	return True
 
 def writexdf(filepath, markercharacter, propertydictionary):
 		try:
