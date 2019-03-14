@@ -39,7 +39,8 @@ def readxdf(data, markercharacter='@'):
         propwasmarked = False
         propvaluewasmarked = False
         propertyname = ''
-
+        if len(data) == 0:
+                return False
         if data[0] != markercharacter or _hasreadxdf or len(markercharacter) > 1:
                 return False
         else:
