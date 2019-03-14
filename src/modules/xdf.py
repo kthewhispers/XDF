@@ -73,8 +73,6 @@ def readxdf(data):
 				isonproperty = True
 				isonmarker = False
 			position += 1
-
-		_tellcurrentparserdictionary()
 		_hasreadxdf = True
 		return True
 
@@ -126,12 +124,11 @@ def readxdf(data, markercharacter):
 				isonproperty = True
 				isonmarker = False
 			position += 1
-
-		_tellcurrentparserdictionary()
 		_hasreadxdf = True
 		return True
 		
 def reset():
+	global debug
         _hasreadxdf = False
         _parseddictionary.clear()
         if debug:
