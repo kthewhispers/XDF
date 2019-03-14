@@ -22,58 +22,7 @@ _parseddictionary = {}
 _hasreadxdf = False
 debug = False
 
-def readxdf(data):
-        global _hasreadxdf
-        isonproperty = False
-        isonpropertyvalue = False
-        isonequal = False
-        isonmarker = True
-        position = 0
-        propertyvaluebuffer = []
-        propertybuffer = []
-        global _parseddictionary
-        propertystartindex = 0
-        propertyendindex = 0
-        propertyvaluestartindex = 0
-        propertyvalueendindex = 0
-        propwasmarked = False
-        propvaluewasmarked = False
-        propertyname = ''
-
-        if data[0] != '@' or _hasreadxdf:
-                return False
-        else:
-                for character in data:
-                        if isonproperty:
-                                if propwasmarked == False:
-                                        propertystartindex = position
-                                        propwasmarked = True
-                                else:
-                                        pass
-
-                        if character == '=':
-                                        isonpropertyvalue = True
-                                        propertyendindex = position
-                                        propertyname = data[propertystartindex:propertyendindex].strip('\n')
-                                        propertyvaluestartindex = position + 1
-
-                        if isonpropertyvalue:
-                                if character == '@' or position == len(data)-1:
-                                        isonmarker = True
-                                        propertyvalueendindex = position
-                                        _parseddictionary[propertyname] = data[propertyvaluestartindex:propertyvalueendindex].strip('\n')
-                                        propwasmarked = False
-                                else:
-                                        pass
-
-                        if isonmarker:
-                                isonproperty = True
-                                isonmarker = False
-                        position += 1
-                _hasreadxdf = True
-                return True
-
-def readxdf(data, markercharacter):
+def readxdf(data, markercharacter='@'):
         global _hasreadxdf
         isonproperty = False
         isonpropertyvalue = False
@@ -142,21 +91,11 @@ def setproperty(propertystring, propertyvalue):
         _parseddictionary[propertystring] = propertyvalue
         return True
 
-def writexdf(filepath, markercharacter, propertydictionary):
+def writexdf(filepath, markercharacter='@', propertydictionary):
         try:
                 file = open(filepath,'w')
                 for key in propertydictionary:
                         file.write(markercharacter+key+'='+str(propertydictionary[key])+"\n")
-                file.close()
-                return True
-        except PermissionError:
-                return False
-
-def writexdf(filepath, propertydictionary):
-        try:
-                file = open(filepath,'w')
-                for key in propertydictionary:
-                        file.write('@'+key+'='+str(propertydictionary[key])+"\n")
                 file.close()
                 return True
         except PermissionError:
