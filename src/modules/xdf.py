@@ -145,6 +145,8 @@ def appendtoproperty(propertystring, propertyvalue):
                 return False
 
 def writexdf(filepath, propertydictionary, markercharacter='@', listseparatormarker=','):
+        if markercharacter == listseparatormarker:
+                return False
         listelementcounter = 0
         try:
                 file = open(filepath,'w')                        
