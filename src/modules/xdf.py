@@ -139,7 +139,7 @@ def reset():
         return True
         
 def getproperty(propertystring):
-        if _hasreadxdf and propertystring in _parseddictionary:
+        if propertystring in _parseddictionary:
                 return _parseddictionary[propertystring]
         else:
                 return False
