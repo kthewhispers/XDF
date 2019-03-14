@@ -10,3 +10,15 @@ Import it into your project and call its functions to use it, as it's a library.
 
 ## Download XDF
 [Get XDF](https://github.com/kthewhispers/XDF/archive/master.zip)
+
+## What could I use XDF for?
+You can use XDF for a few things such as:
+
+* Saving and reading configuration properties and values for any kind of software
+
+* Using XDF to read and write a local, file-based, primitive database that can be interacted with by local software.
+
+* Storing data
+
+## It has no child properties and no property hierarchy to organize and manage complex, large amounts of data. Why use XDF?
+That's a fair point. But I decided not to implement these features into XDF because in the current implementation of XDF, you have unlimited ways to do it yourself. No, not by coding it into XDF, but with the `setproperty()` and `getproperty()` functions.
