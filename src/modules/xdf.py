@@ -22,7 +22,7 @@ _parseddictionary = {}
 _hasreadxdf = False
 debug = False
 
-def readxdf(data, filepath=None, markercharacter='@'):
+def readxdf(filepath, data=None, markercharacter='@'):
         global _hasreadxdf
         isonproperty = False
         isonpropertyvalue = False
@@ -40,7 +40,7 @@ def readxdf(data, filepath=None, markercharacter='@'):
         propvaluewasmarked = False
         propertyname = ''
 
-        if filepath is not None and data is None:
+        if filepath is not None:
                 try:
                         file = open(filepath, 'r')
                         data = file.read()
