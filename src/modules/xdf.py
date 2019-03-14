@@ -15,7 +15,8 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.'''
+SOFTWARE.
+'''
 
 _parseddictionary = {}
 _hasreadxdf = False
@@ -142,24 +143,24 @@ def setproperty(propertystring, propertyvalue):
         return True
 
 def writexdf(filepath, markercharacter, propertydictionary):
-                try:
-                        file = open(filepath,'w')
-                        for key in propertydictionary:
-                                file.write(markercharacter+key+'='+str(propertydictionary[key])+"\n")
-                        file.close()
-                        return True
-                except PermissionError:
-                        return False
+        try:
+                file = open(filepath,'w')
+                for key in propertydictionary:
+                        file.write(markercharacter+key+'='+str(propertydictionary[key])+"\n")
+                file.close()
+                return True
+        except PermissionError:
+                return False
 
 def writexdf(filepath, propertydictionary):
-                try:
-                        file = open(filepath,'w')
-                        for key in propertydictionary:
-                                file.write('@'+key+'='+str(propertydictionary[key])+"\n")
-                        file.close()
-                        return True
-                except PermissionError:
-                        return False
+        try:
+                file = open(filepath,'w')
+                for key in propertydictionary:
+                        file.write('@'+key+'='+str(propertydictionary[key])+"\n")
+                file.close()
+                return True
+        except PermissionError:
+                return False
 
 def _tellcurrentparserdictionary():
         print(F"Listing {len(_parseddictionary)} properties and values in memory: \n{_parseddictionary}")
