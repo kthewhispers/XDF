@@ -52,7 +52,7 @@ def readxdf(data, filepath=None, markercharacter='@'):
 
         if len(data) == 0:
                 return False
-        if data[0] != markercharacter or _hasreadxdf or len(markercharacter) > 1:
+        if data[0] != markercharacter or _hasreadxdf or len(markercharacter) != 1:
                 return False
         else:
                 for character in data:
