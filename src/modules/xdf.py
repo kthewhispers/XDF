@@ -92,9 +92,13 @@ def setproperty(propertystring, propertyvalue):
         _parseddictionary[propertystring] = propertyvalue
         return True
 
-def writexdf(filepath, propertydictionary, markercharacter='@'):
+def writexdf(filepath, propertydictionary, markercharacter='@', append=False):
         try:
-                file = open(filepath,'w')
+                if not append:
+                        file = open(filepath,'w')
+                else:
+                        file = open(filepath,'a')
+                        
                 for key in propertydictionary:
                         file.write(markercharacter+key+'='+str(propertydictionary[key])+"\n")
                 file.close()
