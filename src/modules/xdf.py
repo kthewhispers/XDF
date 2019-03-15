@@ -116,7 +116,6 @@ def readxdf(filepath, data=None, markercharacter='@', listseparatormarker=','):
                                 isonmarker = False
                         position += 1
                 _hasreadxdf = True
-                _tellcurrentparserdictionary()
                 return True
                 
 def reset():
