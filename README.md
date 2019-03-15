@@ -21,4 +21,4 @@ You can use XDF for a few things such as:
 * Storing data
 
 ## It has no child properties and no property hierarchy to organize and manage complex, large amounts of data. Why use XDF?
-That's a fair point. These features aren't yet implemented into XDF because in the current implementation of XDF, but you have unlimited ways to do it yourself. No, not by coding it into XDF, but with the `setproperty()` and `getproperty()` functions. Check out ways XDF can be used, and observe it being used in programs at the [XDF Implementation Examples Wiki](https://github.com/kthewhispers/XDF/wiki/XDF---Implementation-Examples)!
+That's a fair point. These features aren't yet implemented into XDF, but you have unlimited ways to do it yourself. No, not by coding it into XDF, but with the `setproperty()` and `getproperty()` functions. Check out ways XDF can be used, and observe it being used in programs at the [XDF Implementation Examples Wiki](https://github.com/kthewhispers/XDF/wiki/XDF---Implementation-Examples)!
